@@ -32,10 +32,11 @@ public class GetStatus {
 
 
     public void executeService(){
+        Semaphore sem = new Semaphore(1);
         ArrayList<Integer> results = new ArrayList<>();
         try {
         for (String host:hostList) {
-                WebVerif thread = new WebVerif(host,results);
+                WebVerif thread = new WebVerif(host,results, sem);
                 executor.submit(thread);
             }
             executor.shutdown();

@@ -12,9 +12,10 @@ public class WebVerif implements Runnable{
 
     private URL website;
     private List<Integer> results;
+    private Semaphore sem;
 
-
-    public WebVerif(String website, ArrayList<Integer> results) throws MalformedURLException {
+    public WebVerif(String website, ArrayList<Integer> results, Semaphore sem) throws MalformedURLException {
+        this.sem = sem;
         this.website = new URL(website);
         this.results=results;
         configProxy();
@@ -44,8 +45,17 @@ public class WebVerif implements Runnable{
 
     @Override
     public void run() {
+        int result =getStatus();
+        try {
+            sem.acquire();
+            results.add(result);
 
-            results.add(getStatus());
+        } catch (InterruptedException e) {
+            System.err.println("Erreur d'excution du thread.");
+        }
+        finally {
+            sem.release();
+        }
 
     }
 }
