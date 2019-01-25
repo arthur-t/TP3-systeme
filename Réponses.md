@@ -21,7 +21,7 @@ Voir classe GatStatus
 
 ####A.
 
-Pour le nombre de bananes, on va utiliser une ArrayBlockingQueue pour ajouter les bananes puisque plusieurs threads pourraient ajouter des bananes en même temps.
+Pour le nombre de bananes, on va utiliser une ArrayBlockingQueue, ressource partégée entre les singes, pour ajouter les bananes puisque plusieurs threads pourraient ajouter des bananes en même temps.
 
 ####B.
 
